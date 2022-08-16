@@ -27,11 +27,17 @@
   //$: = reactive statement - which runs immediately before the component updates whenever the value/sit depends on changes
   $: name = `${firstName}${middleName}${lastName}`;
 
+  $: newCat = "";
+
+  const handleNewCat = e => {
+    newCat = e.target.value;
+  };
+
   const toggle = () => {
     color = color === "blue" ? "red" : "blue";
     showText = !showText;
     console.log(users.length + 1);
-    users = [...users, { id: users.length + 1, name: "scrabbles" }];
+    users = [...users, { id: users.length + 1, name: newCat }];
   };
 </script>
 
@@ -46,6 +52,8 @@
     <p>press button to show text</p>
   {/if}
   <button on:click={toggle}>click</button>
+
+  <input type="text" on:input={handleNewCat} value={""} />
 
   {#each users as user (user.id)}
     <h3>{user.id}: {user.name}</h3>
