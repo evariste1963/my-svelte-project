@@ -1,83 +1,32 @@
 <script>
-  let firstName = "this";
-  let middleName = ".";
-  let lastName = "me";
-  let color = "blue";
-  let showText = false;
-  let users = [
-    {
-      id: 1,
-      name: "Reuben",
-    },
-    {
-      id: 2,
-      name: "Colette",
-    },
-    {
-      id: 3,
-      name: "Mr Mo",
-    },
-    {
-      id: 4,
-      name: "Minx",
-    },
-  ];
-  //let name = `${firstName}${middleName}${lastName}`;
+	import FeedbackList from './components/FeedbackList.svelte'
 
-  //$: = reactive statement - which runs immediately before the component updates whenever the value/sit depends on changes
-  $: name = `${firstName}${middleName}${lastName}`;
+  let feedback = [
+	{
+	id: 1,
+	rating:10,
+	text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+	id: 2,
+	rating:9,
+	text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+	id: 3,
+	rating:8,
+	text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  ]
 
-  $: newCat = "";
-
-  const handleNewCat = e => {
-    newCat = e.target.value;
-  };
-
-  const toggle = () => {
-    color = color === "blue" ? "red" : "blue";
-    showText = !showText;
-    console.log(users.length + 1);
-    users = [...users, { id: users.length + 1, name: newCat }];
-  };
+  const deleteFeedback = (e)=> {
+const itemId = e.detail
+feedback = feedback.filter((item) => item.id !=itemId)
+  }
 </script>
 
-<main>
-  <h1 style="color: {color}">Hello {name}!</h1>
-  {#if showText}
-    <p
-      >Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
-      how to build Svelte apps.</p
-    >
-  {:else}
-    <p>press button to show text</p>
-  {/if}
-  <button on:click={toggle}>click</button>
-
-  <input type="text" on:input={handleNewCat} value={""} />
-
-  {#each users as user (user.id)}
-    <h3>{user.id}: {user.name}</h3>
-  {/each}
+<main class='container'>
+ <FeedbackList {feedback} on:delete-feedback={deleteFeedback} />
+  
 </main>
 
-<style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
-</style>
